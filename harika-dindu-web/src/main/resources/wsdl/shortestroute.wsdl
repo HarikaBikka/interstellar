@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://assignment.discovery.co.za/ShortestPathService/schema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://assignment.discovery.co.za/ShortestPathService/schema" targetNamespace="http://assignment.discovery.co.za/ShortestPathService/schema">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://assignment.discovery.co.za/ShortestPathService/schema">
+
+    <xs:element name="shortestPathRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="originPlanet" type="xs:string"/>
+                <xs:element name="destPlanet" type="xs:string"/>
+                <xs:element name="traffic" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="shortestPathResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="shortestPath" type="tns:planet"/>
+                <xs:element name="shortestdistance" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="planet">
+        <xs:sequence>
+            <xs:element name="planetNode" type="xs:string"/>
+            <xs:element name="planetName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+   
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="shortestPathResponse">
+    <wsdl:part element="tns:shortestPathResponse" name="shortestPathResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="shortestPathRequest">
+    <wsdl:part element="tns:shortestPathRequest" name="shortestPathRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ShortestPathPort">
+    <wsdl:operation name="shortestPath">
+      <wsdl:input message="tns:shortestPathRequest" name="shortestPathRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:shortestPathResponse" name="shortestPathResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ShortestPathPortSoap11" type="tns:ShortestPathPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="shortestPath">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="shortestPathRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="shortestPathResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ShortestPathPortService">
+    <wsdl:port binding="tns:ShortestPathPortSoap11" name="ShortestPathPortSoap11">
+      <soap:address location="http://localhost:8181/harika-dindu-service/shortestpathws"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

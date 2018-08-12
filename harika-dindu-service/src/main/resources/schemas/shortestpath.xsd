@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+    targetNamespace="http://assignment.discovery.co.za/ShortestPathService/schema"
+    xmlns:tns="http://assignment.discovery.co.za/ShortestPathService/schema"
+    elementFormDefault="qualified" >
+
+    <xs:element name="shortestPathRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="originPlanet" type="xs:string"/>
+                <xs:element name="destPlanet" type="xs:string"/>
+                <xs:element name="traffic" type="xs:boolean"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="shortestPathResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="shortestPath" type="tns:planet" maxOccurs="unbounded"/>
+                <xs:element name="shortestdistance" type="xs:double"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="planet">
+        <xs:sequence>
+            <xs:element name="planetNode" type="xs:string"/>
+            <xs:element name="planetName" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+   
+</xs:schema>

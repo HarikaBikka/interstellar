@@ -1,0 +1,68 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<title>Discovery assignment</title>
+</h:head>
+<h:body>
+	<h3>Discovery assignment to calculate the shortest path</h3>
+	<h:outputLabel
+		value="Capture planet information to calculate shortest path:" />
+	<br />
+
+	<h:form>
+		<h:panelGrid id="planetsGrid" columns="3">
+			<h:outputText value="Source Planet" />
+
+			<h:selectOneMenu id="sourcePlanet" required="true"
+				requiredMessage="Source planet is required."
+				value="#{interstellarBean.sourcePlanet}">
+				<f:selectItems value="#{interstellarBean.planets}" var="planet"
+					itemValue="#{planet.planetNode}"
+					itemLabel="#{planet.planetName} (#{planet.planetNode})" />
+			</h:selectOneMenu>
+			<h:message for="sourcePlanet" style="color:red;" />
+
+			<h:outputText value="Dest Planet" />
+			<h:selectOneMenu id="destPlanet" required="true"
+				requiredMessage="Destination planet is required."
+				value="#{interstellarBean.destPlanet}">
+				<f:selectItems value="#{interstellarBean.planets}" var="planet"
+					itemValue="#{planet.planetNode}"
+					itemLabel="#{planet.planetName} (#{planet.planetNode})" />
+			</h:selectOneMenu>
+			<h:message for="destPlanet" style="color:red;" />
+
+			<h:outputText value="With Traffic/ Without Traffic" />
+			<h:selectBooleanCheckbox value="#{interstellarBean.traffic}" />
+
+			<h:outputText value="" />
+			<h:commandButton value="Calculate shortest path"
+				action="#{interstellarBean.calculateShortestPath}"
+				process="planetsGrid" />
+		</h:panelGrid>
+	</h:form>
+	<br />
+	<br />
+
+	<h:outputLabel rendered="#{! empty interstellarBean.shortesPath}"
+		value="The shortest path distance between planets #{interstellarBean.sourcePlanet} and #{interstellarBean.destPlanet} is  #{interstellarBean.shortestPathDistance} light yrears" />
+	<br />
+	<br />
+	<h:outputLabel value="Below is the shortest path route:" rendered="#{! empty interstellarBean.shortesPath}"/>
+
+	<h:dataTable value="#{interstellarBean.shortesPath}" var="route"
+		rendered="#{! empty interstellarBean.shortesPath}">
+
+		<h:column>
+			<f:facet name="header">Planet Name</f:facet>    				
+	      #{route.planetNode}
+	   </h:column>
+		<h:column>
+			<f:facet name="header">Planet Description</f:facet>
+	      #{route.planetName}
+	   </h:column>
+
+	</h:dataTable>
+</h:body>
+</html>
